@@ -1,0 +1,16 @@
+var request = require('hyperquest');
+//var through = require("through2");
+var colors = require('colors');
+
+var config = require('../config');
+
+var debug = console.log;
+
+var argv = require('minimist')(process.argv.slice(2));
+
+var cli = require("../");
+
+cli.run(process.stdin, process.stdout, { argv: argv }, function(err){
+  console.log(err);
+});
+
