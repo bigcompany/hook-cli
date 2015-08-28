@@ -27,11 +27,21 @@ cli.run = function (stdin, stdout, opts, cb){
   };
 
   var commands = {
-    "init": {},
-    "push": {},
-    "pull": {},
-    "run": {},
-    "test": {}
+    "init": {
+      "description": "creates a new Hook scaffold"
+    },
+    "push": {
+      "description": "pushes current Hook to hook.io"
+    },
+    "pull": {
+      "description": "pulls a local copy of a hook.io Hook"
+    },
+    "run": {
+      "description": "runs current Hook"
+    },
+    "test": {
+      "description": "runs tests for current Hook"
+    }
   };
 
   cli.commands = {};
@@ -39,7 +49,6 @@ cli.run = function (stdin, stdout, opts, cb){
     cli.commands[c] = require('./lib/commands/' + c);
   }
   
-  console.log(cli);
   
 
   // If no microservice is provided, show a list of default microservices
@@ -53,26 +62,21 @@ cli.run = function (stdin, stdout, opts, cb){
   var command = argv._[0];
   
   if (argv._.length === 0 ) {
-    console.log('no command has been selected');
-    console.log('available commands:');
-    console.log(Object.keys(commands).join('\n'));
-    //console.log('init');
-    //console.log('push');
-    //console.log('pull');
-    //console.log('run');
+    console.log('no command has been selected'.red);
+    console.log('available commands:'.blue);
+    
+    for (var c in commands) {
+      console.log(c.magenta + ' - '.grey + commands[c].description.grey)
+    }
+    //console.log(Object.keys(commands).join('\n'));
+    return;
     return cb(null);
   }
 
- if (typeof commands[command] === 'undefined') {
-   console.log('invalid command: ' + command);
-   console.log('available commands:');
-   console.log(Object.keys(commands).join('\n'));
-   return cb(null);
- }
   
   
  cli.commands[command]({}, function (err) {
-   console.log(err, 'ran')
+//   console.log(err, 'ran')
  });
  
  return;

@@ -1,3 +1,4 @@
+#!/usr/local/bin/node
 var request = require('hyperquest');
 //var through = require("through2");
 var colors = require('colors');
